@@ -33,6 +33,12 @@ interface SlotsResponse {
   meetingType: { name: string; duration_minutes: number; description: string | null }
 }
 
+interface BookingPrefill {
+  name: string
+  email: string
+  phone?: string
+}
+
 // =============================================================================
 // Config
 // =============================================================================
@@ -54,9 +60,15 @@ function getUtmParams(): Record<string, string> {
 // Component
 // =============================================================================
 
-type Step = "date" | "time" | "form" | "confirm"
+type Step = "date" | "time" | "form" | "summary" | "confirm"
 
-export function BookingWidget({ slug = "erstkontakt" }: { slug?: string }) {
+export function BookingWidget({
+  slug = "erstkontakt",
+  prefill,
+}: {
+  slug?: string
+  prefill?: BookingPrefill
+}) {
   const [step, setStep] = useState<Step>("date")
   const [meetingType, setMeetingType] = useState<MeetingType | null>(null)
   const [selectedDate, setSelectedDate] = useState<Date | undefined>()
@@ -68,9 +80,9 @@ export function BookingWidget({ slug = "erstkontakt" }: { slug?: string }) {
   const [confirmData, setConfirmData] = useState<{ host_name: string } | null>(null)
 
   // Form state
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [phone, setPhone] = useState("")
+  const [name, setName] = useState(prefill?.name ?? "")
+  const [email, setEmail] = useState(prefill?.email ?? "")
+  const [phone, setPhone] = useState(prefill?.phone ?? "")
   const [formErrors, setFormErrors] = useState<Record<string, string>>({})
 
   // Fetch meeting type on mount
@@ -117,7 +129,7 @@ export function BookingWidget({ slug = "erstkontakt" }: { slug?: string }) {
 
   const handleSlotSelect = (slot: TimeSlot) => {
     setSelectedSlot(slot)
-    setStep("form")
+    setStep(prefill ? "summary" : "form")
   }
 
   const validateForm = () => {
@@ -341,6 +353,57 @@ export function BookingWidget({ slug = "erstkontakt" }: { slug?: string }) {
           <p className="text-xs text-center text-[#04252b]/40">
             Kostenlos & unverbindlich · Sie erhalten eine Bestätigung per E-Mail
           </p>
+        </div>
+      )}
+
+      {/* Step: Summary (prefill mode — skip form, show confirmation) */}
+      {step === "summary" && selectedSlot && selectedDate && (
+        <div className="space-y-4">
+          <button
+            onClick={() => setStep("time")}
+            className="flex items-center gap-1 text-sm text-[#04252b]/60 hover:text-[#04252b] transition-colors"
+          >
+            <ChevronLeft className="h-4 w-4" />
+            Andere Uhrzeit wählen
+          </button>
+
+          <div className="bg-white/60 border border-white/40 rounded-xl p-4 space-y-3">
+            <div className="flex items-center gap-2 text-sm text-[#04252b]">
+              <Calendar className="h-4 w-4 text-[#77be21]" />
+              <span className="font-medium">
+                {format(selectedDate, "EEEE, d. MMMM yyyy", { locale: de })}
+              </span>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-[#04252b]">
+              <Clock className="h-4 w-4 text-[#77be21]" />
+              <span className="font-medium">
+                {format(new Date(selectedSlot.start), "HH:mm")} Uhr
+                ({meetingType?.duration_minutes} Min)
+              </span>
+            </div>
+            <div className="pt-2 border-t border-[#04252b]/5 text-sm text-[#04252b]/70">
+              <p>{name}</p>
+              <p>{email}</p>
+            </div>
+          </div>
+
+          <Button
+            onClick={handleSubmit}
+            disabled={loading}
+            className="w-full bg-[#77be21] hover:bg-[#6ba01d] text-white py-3 rounded-lg font-medium text-sm transition-colors"
+          >
+            {loading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              "Termin bestätigen"
+            )}
+          </Button>
+
+          {error && (
+            <div className="bg-red-50/80 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+              {error}
+            </div>
+          )}
         </div>
       )}
 
