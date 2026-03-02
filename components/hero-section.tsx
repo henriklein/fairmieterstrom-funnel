@@ -94,14 +94,19 @@ export function HeroSection() {
           </div>
 
           <div className="lg:pl-8">
-            <Card className="p-4 sm:p-6 lg:p-8 bg-card shadow-lg">
-              <div className="space-y-4 lg:space-y-6">
-                <h3 className="text-xl sm:text-xl lg:text-2xl font-semibold text-center text-balance text-card-foreground">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-md rounded-2xl lg:rounded-3xl border border-white/20 shadow-2xl"></div>
+              <div className="relative p-4 sm:p-6 lg:p-8 h-[520px] lg:h-[560px] flex flex-col">
+                <h3 className="text-xl sm:text-xl lg:text-2xl font-semibold text-center text-balance text-[#04252b] mb-4 lg:mb-6 flex-shrink-0">
                   Kostenlose Beratung anfragen
                 </h3>
-                <IntakeWidget />
+                <div className="flex-1 flex items-center">
+                  <div className="w-full">
+                    <IntakeWidget />
+                  </div>
+                </div>
               </div>
-            </Card>
+            </div>
           </div>
         </div>
 
