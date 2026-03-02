@@ -76,9 +76,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://fairmieterstrom.energy",
   },
-  verification: {
-    google: "your-google-verification-code", // Replace with actual verification code
-  },
+  // verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION },
 }
 
 export default function RootLayout({
@@ -87,7 +85,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="de">
       <head>
         <Script
           id="gtm-script"
@@ -115,6 +113,20 @@ export default function RootLayout({
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
         <CookieBanner />
+        {/* Microsoft Clarity */}
+        <Script
+          id="clarity-script"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID ?? ''}");
+            `,
+          }}
+        />
       </body>
     </html>
   )
