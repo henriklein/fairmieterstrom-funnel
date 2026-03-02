@@ -10,7 +10,7 @@ import { useEffect, useState } from "react"
  * to the PEG booking iframe so they get stored with the booking.
  */
 function getBookingUrl(slug: string) {
-  const base = `https://preview.fairmieterstrom.app/booking/${slug}`
+  const base = `https://www.fairmieterstrom.app/booking/${slug}`
   if (typeof window === "undefined") return base
 
   const params = new URLSearchParams(window.location.search)
@@ -28,7 +28,7 @@ function getBookingUrl(slug: string) {
 
 export function AnsprechpartnerSection() {
   const [bookingUrl, setBookingUrl] = useState(
-    "https://preview.fairmieterstrom.app/booking/erstkontakt"
+    "https://www.fairmieterstrom.app/booking/erstkontakt"
   )
 
   useEffect(() => {
