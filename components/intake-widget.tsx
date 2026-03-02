@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { CheckCircle2, ChevronLeft, ChevronDown, Home, Building2, HelpCircle, Loader2 } from "lucide-react"
+import { CheckCircle2, ChevronLeft, ChevronDown, Home, Building2, HelpCircle, Loader2, Calendar } from "lucide-react"
+import { BookingWidget } from "@/components/booking-widget"
 import { Button } from "@/components/ui/button"
 
 // =============================================================================
@@ -70,6 +71,7 @@ export function IntakeWidget() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [formErrors, setFormErrors] = useState<Record<string, string>>({})
+  const [showBooking, setShowBooking] = useState(false)
   const [showCountryDropdown, setShowCountryDropdown] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -343,20 +345,50 @@ export function IntakeWidget() {
         </div>
       )}
 
-      {/* Step 6: Confirmation */}
+      {/* Step 6: Confirmation + optional booking */}
       {step === 6 && (
-        <div className="text-center space-y-4 py-4">
-          <CheckCircle2 className="h-12 w-12 mx-auto text-[#77be21]" />
-          <div>
-            <h3 className="text-lg font-semibold text-[#04252b]">Vielen Dank!</h3>
-            <p className="text-sm text-[#04252b]/60 mt-1">
-              Ihre Anfrage wurde erfolgreich übermittelt.
-            </p>
+        <div className="space-y-5">
+          <div className="text-center space-y-3 py-2">
+            <CheckCircle2 className="h-10 w-10 mx-auto text-[#77be21]" />
+            <div>
+              <h3 className="text-lg font-semibold text-[#04252b]">Vielen Dank!</h3>
+              <p className="text-sm text-[#04252b]/60 mt-1">
+                Ihre Anfrage wurde erfolgreich übermittelt.
+              </p>
+            </div>
           </div>
-          <p className="text-sm text-[#04252b]/50">
-            Wir melden uns innerhalb von 24 Stunden bei Ihnen unter{" "}
-            <span className="font-medium text-[#04252b]/70">{formData.email}</span>
-          </p>
+
+          {!showBooking ? (
+            <div className="space-y-3">
+              <p className="text-sm text-center text-[#04252b]/50">
+                Wir melden uns innerhalb von 24 Stunden bei Ihnen unter{" "}
+                <span className="font-medium text-[#04252b]/70">{formData.email}</span>
+              </p>
+              <button
+                onClick={() => setShowBooking(true)}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl bg-[#77be21] hover:bg-[#6ba01d] text-white font-medium text-sm transition-colors"
+              >
+                <Calendar className="h-4 w-4" />
+                Jetzt Gespräch vereinbaren
+              </button>
+              <p className="text-xs text-center text-[#04252b]/35">
+                Sichern Sie sich direkt einen kostenlosen Beratungstermin
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              <p className="text-sm text-center text-[#04252b]/50 font-medium">
+                Wählen Sie einen Termin:
+              </p>
+              <BookingWidget
+                prefill={{
+                  name: formData.name,
+                  email: formData.email,
+                  phone: getFullPhone(),
+                }}
+              />
+            </div>
+          )}
         </div>
       )}
     </div>
