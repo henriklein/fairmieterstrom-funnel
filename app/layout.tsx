@@ -76,7 +76,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://fairmieterstrom.energy",
   },
-  // verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION },
+  verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION },
 }
 
 export default function RootLayout({

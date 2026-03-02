@@ -1,18 +1,8 @@
 User-agent: *
 Allow: /
 
-# Sitemap
-Sitemap: https://fairmieterstrom.pure-energy-germany.de/sitemap.xml
+Sitemap: https://fairmieterstrom.energy/sitemap.xml
 
-# Block access to admin areas (if any exist in the future)
 Disallow: /admin/
 Disallow: /api/
 Disallow: /_next/
-Disallow: /private/
-
-# Allow all other content
-Allow: /
-Allow: /berechner
-Allow: /beratungsgespraech
-Allow: /infomaterial
-Allow: /mieter
