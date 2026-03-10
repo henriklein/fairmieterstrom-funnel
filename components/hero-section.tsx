@@ -2,16 +2,57 @@
 
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { Check } from "lucide-react"
+import { Check, ExternalLink } from "lucide-react"
 import Image from "next/image"
-import { IntakeWidget } from "@/components/intake-widget"
+import { useState, useEffect } from "react"
 
 export function HeroSection() {
+  const [formLoaded, setFormLoaded] = useState(false)
+  const [showFormPopup, setShowFormPopup] = useState(false)
+
+  useEffect(() => {
+    const loadFilloutScript = () => {
+      if (document.querySelector('script[src="https://server.fillout.com/embed/v1/"]')) {
+        return
+      }
+
+      const script = document.createElement("script")
+      script.src = "https://server.fillout.com/embed/v1/"
+      script.async = true
+      document.head.appendChild(script)
+    }
+
+    loadFilloutScript()
+
+    const checkFormLoad = () => {
+      const formElement = document.querySelector('[data-fillout-id="9BTwJ8oWWrus"]')
+      if (formElement && formElement.children.length > 0) {
+        setFormLoaded(true)
+      }
+    }
+
+    checkFormLoad()
+    const interval = setInterval(checkFormLoad, 1000)
+
+    setTimeout(() => {
+      clearInterval(interval)
+      if (!formLoaded) {
+        console.log("[v0] Form embed failed to load, showing fallback button")
+      }
+    }, 10000)
+
+    return () => clearInterval(interval)
+  }, [formLoaded])
+
   const scrollToContact = () => {
     const element = document.getElementById("kontakt")
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
     }
+  }
+
+  const openFormPopup = () => {
+    setShowFormPopup(true)
   }
 
   const partnerLogos = [
@@ -94,20 +135,62 @@ export function HeroSection() {
           </div>
 
           <div className="lg:pl-8">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-md rounded-2xl lg:rounded-3xl border border-white/20 shadow-2xl"></div>
-              <div className="relative p-4 sm:p-6 lg:p-8 h-[520px] lg:h-[560px] flex flex-col">
-                <h3 className="text-xl sm:text-xl lg:text-2xl font-semibold text-center text-balance text-[#04252b] mb-4 lg:mb-6 flex-shrink-0">
+            <Card className="p-4 sm:p-6 lg:p-8 bg-card shadow-lg">
+              <div className="space-y-4 lg:space-y-6">
+                <h3 className="text-xl sm:text-xl lg:text-2xl font-semibold text-center text-balance text-card-foreground">
                   Kostenlose Beratung anfragen
                 </h3>
-                <div className="flex-1 flex items-center">
-                  <div className="w-full">
-                    <IntakeWidget />
+
+                {!formLoaded && (
+                  <div className="text-center py-8">
+                    <p className="text-muted-foreground mb-4">Formular lädt nicht? Kein Problem!</p>
+                    <Button
+                      onClick={openFormPopup}
+                      className="bg-[#77be21] hover:bg-[#6ba01d] text-white px-6 py-3 text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                    >
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      Beratungsformular öffnen
+                    </Button>
                   </div>
-                </div>
+                )}
+
+                <div
+                  style={{
+                    width: "100%",
+                    height: "430px",
+                    minHeight: "430px",
+                    maxHeight: "430px",
+                    overflow: "hidden",
+                  }}
+                  className="sm:h-[430px] lg:h-[430px]"
+                  data-fillout-id="9BTwJ8oWWrus"
+                  data-fillout-embed-type="standard"
+                  data-fillout-inherit-parameters
+                  data-fillout-dynamic-resize
+                  data-fillout-redirect-url={`${typeof window !== "undefined" ? window.location.origin : ""}/danke`}
+                />
+              </div>
+            </Card>
+          </div>
+
+          {showFormPopup && (
+            <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+              <div className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-lg overflow-hidden">
+                <button
+                  onClick={() => setShowFormPopup(false)}
+                  className="absolute top-4 right-4 z-10 bg-white/90 hover:bg-white text-gray-600 hover:text-gray-800 rounded-full p-2 shadow-lg transition-all"
+                >
+                  ✕
+                </button>
+                <iframe
+                  src="https://forms.fillout.com/t/9BTwJ8oWWrus"
+                  className="w-full h-[80vh]"
+                  frameBorder="0"
+                  title="Beratungsformular"
+                />
               </div>
             </div>
-          </div>
+          )}
         </div>
 
         <div className="mt-12 lg:mt-16 pt-6 lg:pt-8 border-t border-border">
