@@ -121,43 +121,21 @@ export function HeroSection() {
           </div>
 
           <div className="lg:pl-8">
-            <Card className="p-4 sm:p-6 lg:p-8 bg-card shadow-lg relative">
-              <div className="space-y-4 lg:space-y-6">
-                <h3 className="text-xl sm:text-xl lg:text-2xl font-semibold text-center text-balance text-card-foreground">
-                  Kostenlose Beratung anfragen
-                </h3>
-
-                <div className="relative">
-                  <iframe
-                    src="https://www.fairmieterstrom.app/embed/funnel"
-                    title="Beratungsanfrage"
-                    className="w-full border-0 rounded-xl"
-                    style={{ height: "560px" }}
-                    loading="eager"
-                    allow="clipboard-write"
-                  />
-                </div>
+            {/* Glass panel matching the left hero card — frames the embedded
+                funnel widget (transparent iframe) instead of a big white box. */}
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-md rounded-2xl lg:rounded-3xl border border-white/20 shadow-2xl"></div>
+              <div className="relative p-2 sm:p-3">
+                <iframe
+                  src="https://www.fairmieterstrom.app/embed/funnel"
+                  title="Kostenlose Beratung anfragen"
+                  className="block w-full border-0 rounded-2xl bg-transparent"
+                  style={{ height: "560px" }}
+                  loading="eager"
+                  allow="clipboard-write"
+                />
               </div>
-
-              {showFormPopup && (
-                <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-                  <div className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-lg overflow-hidden">
-                    <button
-                      onClick={() => setShowFormPopup(false)}
-                      className="absolute top-4 right-4 z-10 bg-white/90 hover:bg-white text-gray-600 hover:text-gray-800 rounded-full p-2 shadow-lg transition-all"
-                    >
-                      ✕
-                    </button>
-                    <iframe
-                      src="https://forms.fillout.com/t/9BTwJ8oWWrus"
-                      className="w-full h-[80vh]"
-                      frameBorder="0"
-                      title="Beratungsformular"
-                    />
-                  </div>
-                </div>
-              )}
-            </Card>
+            </div>
           </div>
         </div>
 
