@@ -2,6 +2,7 @@
 
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { BookingWidget } from "@/components/booking-widget";
 import { ExternalLink } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import Script from "next/script";
@@ -101,15 +102,10 @@ export function AnsprechpartnerSection() {
             <h3 className="text-2xl font-semibold text-center text-[#04252b] mb-6">
               Jetzt Gespräch ausmachen
             </h3>
-            <div className="bg-white/60 backdrop-blur-sm rounded-2xl overflow-hidden shadow-xl border border-white/20 flex-1 relative">
-              <iframe
-                src="https://www.fairmieterstrom.app/embed/funnel"
-                title="Beratungsanfrage"
-                className="w-full border-0"
-                style={{ minWidth: "280px", height: "720px" }}
-                loading="lazy"
-                allow="clipboard-write"
-              />
+            <div className="bg-white/60 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 flex-1 relative p-6 sm:p-8">
+              {/* Booking for Jan Graventein (meeting type slug "jan-graventein")
+                  — a real call-booking widget here, not the intake funnel. */}
+              <BookingWidget slug="jan-graventein" />
             </div>
           </div>
         </div>
