@@ -55,14 +55,14 @@ export function AnsprechpartnerSection() {
           {/* Left side - Leroy's info */}
           <div className="flex flex-col">
             <h3 className="text-2xl font-semibold text-[#04252b] mb-6">
-              Hey, ich bin Leroy!
+              Hey, ich bin Jan!
             </h3>
             <Card className="p-8 bg-white/60 backdrop-blur-sm border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 flex-1">
               <div className="space-y-6 h-full flex flex-col">
                 <div className="flex justify-center">
                   <img
                     src="/images/design-mode/68681412c4914a212e8638ba_Jan%20Graventein(1).png"
-                    alt="Leroy - Ihr persönlicher Ansprechpartner"
+                    alt="Jan Graventein - Ihr persönlicher Ansprechpartner"
                     className="w-48 h-48 rounded-full object-cover border-4 border-white/50 shadow-lg"
                   />
                 </div>

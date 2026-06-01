@@ -1,9 +1,10 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, type CSSProperties } from "react"
 import { format, addDays, isWeekend, startOfDay, isBefore } from "date-fns"
 import { de } from "date-fns/locale"
 import { DayPicker } from "react-day-picker"
+import "react-day-picker/style.css"
 import { Calendar, CheckCircle2, ChevronLeft, Clock, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -224,25 +225,22 @@ export function BookingWidget({
             locale={de}
             showOutsideDays={false}
             className="!font-sans"
+            // Brand the v9 default stylesheet (imported above) via its CSS vars.
+            style={
+              {
+                "--rdp-accent-color": "#77be21",
+                "--rdp-accent-background-color": "#77be21",
+                "--rdp-today-color": "#77be21",
+                "--rdp-day-width": "2.5rem",
+                "--rdp-day-height": "2.5rem",
+              } as CSSProperties
+            }
+            // NOTE: v9 renamed all classNames keys; the previous v8 keys
+            // (head_row/cell/day/…) silently did nothing, which is why the
+            // weekday header was broken. Only light v9 overrides needed now.
             classNames={{
-              months: "flex flex-col",
-              month: "space-y-3",
-              caption: "flex justify-center pt-1 relative items-center text-[#04252b] font-semibold",
-              caption_label: "text-base font-medium",
-              nav: "space-x-1 flex items-center",
-              nav_button: "h-7 w-7 bg-transparent p-0 text-[#04252b]/60 hover:text-[#04252b] inline-flex items-center justify-center rounded-md",
-              nav_button_previous: "absolute left-1",
-              nav_button_next: "absolute right-1",
-              table: "w-full border-collapse",
-              head_row: "flex",
-              head_cell: "text-[#04252b]/50 rounded-md w-10 font-normal text-[0.8rem] text-center",
-              row: "flex w-full mt-1",
-              cell: "text-center text-sm p-0 relative first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20 h-10 w-10",
-              day: "h-10 w-10 p-0 font-normal rounded-full hover:bg-[#77be21]/10 transition-colors inline-flex items-center justify-center",
-              day_selected: "bg-[#77be21] text-white hover:bg-[#6ba01d] focus:bg-[#6ba01d]",
-              day_today: "font-bold text-[#77be21]",
-              day_outside: "text-[#04252b]/20",
-              day_disabled: "text-[#04252b]/20 cursor-not-allowed hover:bg-transparent",
+              today: "font-bold text-[#77be21]",
+              chevron: "fill-[#04252b]/70",
             }}
           />
         </div>
