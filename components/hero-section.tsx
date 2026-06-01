@@ -128,30 +128,13 @@ export function HeroSection() {
                 </h3>
 
                 <div className="relative">
-                  {!formLoaded && (
-                    <div className="absolute inset-0 z-10 flex items-center justify-center bg-card">
-                      <div className="text-center">
-                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#77be21] mx-auto mb-4" />
-                        <p className="text-muted-foreground text-sm">Formular wird geladen...</p>
-                      </div>
-                    </div>
-                  )}
-
-                  <div
-                    ref={formRef}
-                    style={{
-                      width: "100%",
-                      height: "430px",
-                      minHeight: "430px",
-                      maxHeight: "430px",
-                      overflow: "hidden",
-                    }}
-                    className="sm:h-[430px] lg:h-[430px]"
-                    data-fillout-id="9BTwJ8oWWrus"
-                    data-fillout-embed-type="standard"
-                    data-fillout-inherit-parameters
-                    data-fillout-dynamic-resize
-                    data-fillout-redirect-url={`${typeof window !== "undefined" ? window.location.origin : ""}/danke`}
+                  <iframe
+                    src="https://www.fairmieterstrom.app/embed/funnel"
+                    title="Beratungsanfrage"
+                    className="w-full border-0 rounded-xl"
+                    style={{ height: "560px" }}
+                    loading="eager"
+                    allow="clipboard-write"
                   />
                 </div>
               </div>

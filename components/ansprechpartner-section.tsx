@@ -102,43 +102,14 @@ export function AnsprechpartnerSection() {
               Jetzt Gespräch ausmachen
             </h3>
             <div className="bg-white/60 backdrop-blur-sm rounded-2xl overflow-hidden shadow-xl border border-white/20 flex-1 relative">
-              <style
-                dangerouslySetInnerHTML={{
-                  __html: `
-                  @media screen and (max-width: 479px) {
-                    .calendly-inline-widget {
-                      min-width: 290px !important;
-                    }
-                  }
-                `,
-                }}
-              />
-              <div
-                ref={widgetRef}
-                className="calendly-inline-widget"
-                data-url="https://calendly.com/l-asamoah-pure-energy-germany/setter-call?hide_event_type_details=1&hide_gdpr_banner=1&background_color=ffffff&text_color=04252b&primary_color=77be21"
+              <iframe
+                src="https://www.fairmieterstrom.app/embed/funnel"
+                title="Beratungsanfrage"
+                className="w-full border-0"
                 style={{ minWidth: "280px", height: "660px" }}
+                loading="lazy"
+                allow="clipboard-write"
               />
-
-              {!calendlyLoaded && (
-                <div className="absolute inset-0 bg-white/90 backdrop-blur-sm flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#77be21] mx-auto mb-4" />
-                    <p className="text-[#04252b]/60 mb-4">
-                      Terminbuchung wird geladen...
-                    </p>
-                    <Button
-                      onClick={openCalendlyPopup}
-                      variant="outline"
-                      size="sm"
-                      className="text-[#04252b]"
-                    >
-                      <ExternalLink className="h-4 w-4 mr-2" />
-                      Im neuen Fenster öffnen
-                    </Button>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>
