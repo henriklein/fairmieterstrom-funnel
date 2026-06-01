@@ -12,6 +12,23 @@ export function HeroSection() {
   const [showFormPopup, setShowFormPopup] = useState(false)
   const formRef = useRef<HTMLDivElement>(null)
 
+  // Dynamic funnel height — the embedded funnel posts its content height per
+  // step so the panel hugs the content instead of a fixed oversized box.
+  const [funnelHeight, setFunnelHeight] = useState(560)
+  const funnelRef = useRef<HTMLIFrameElement>(null)
+  useEffect(() => {
+    const onMessage = (e: MessageEvent) => {
+      if (e.origin !== "https://www.fairmieterstrom.app") return
+      if (funnelRef.current && e.source !== funnelRef.current.contentWindow) return
+      const data = e.data as { type?: string; height?: number }
+      if (data?.type === "fms-funnel-height" && typeof data.height === "number") {
+        setFunnelHeight(Math.max(360, Math.min(1200, Math.ceil(data.height))))
+      }
+    }
+    window.addEventListener("message", onMessage)
+    return () => window.removeEventListener("message", onMessage)
+  }, [])
+
   useEffect(() => {
     // Poll for Fillout to inject content into the embed div
     const interval = setInterval(() => {
@@ -127,10 +144,11 @@ export function HeroSection() {
               <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-md rounded-2xl lg:rounded-3xl border border-white/20 shadow-2xl"></div>
               <div className="relative p-2 sm:p-3">
                 <iframe
+                  ref={funnelRef}
                   src="https://www.fairmieterstrom.app/embed/funnel"
                   title="Kostenlose Beratung anfragen"
-                  className="block w-full border-0 rounded-2xl bg-transparent"
-                  style={{ height: "720px" }}
+                  className="block w-full border-0 rounded-2xl bg-transparent transition-[height] duration-300 ease-out"
+                  style={{ height: `${funnelHeight}px` }}
                   loading="eager"
                   allow="clipboard-write"
                 />
