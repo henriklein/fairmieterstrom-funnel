@@ -106,7 +106,7 @@ export function AnsprechpartnerSection() {
                 src="https://www.fairmieterstrom.app/embed/funnel"
                 title="Beratungsanfrage"
                 className="w-full border-0"
-                style={{ minWidth: "280px", height: "660px" }}
+                style={{ minWidth: "280px", height: "720px" }}
                 loading="lazy"
                 allow="clipboard-write"
               />

@@ -130,7 +130,7 @@ export function HeroSection() {
                   src="https://www.fairmieterstrom.app/embed/funnel"
                   title="Kostenlose Beratung anfragen"
                   className="block w-full border-0 rounded-2xl bg-transparent"
-                  style={{ height: "560px" }}
+                  style={{ height: "720px" }}
                   loading="eager"
                   allow="clipboard-write"
                 />
