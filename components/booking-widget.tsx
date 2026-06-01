@@ -1,10 +1,9 @@
 "use client"
 
-import { useState, useEffect, useCallback, type CSSProperties } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { format, addDays, isWeekend, startOfDay, isBefore } from "date-fns"
 import { de } from "date-fns/locale"
 import { DayPicker } from "react-day-picker"
-import "react-day-picker/style.css"
 import { Calendar, CheckCircle2, ChevronLeft, Clock, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -225,22 +224,32 @@ export function BookingWidget({
             locale={de}
             showOutsideDays={false}
             className="!font-sans"
-            // Brand the v9 default stylesheet (imported above) via its CSS vars.
-            style={
-              {
-                "--rdp-accent-color": "#77be21",
-                "--rdp-accent-background-color": "#77be21",
-                "--rdp-today-color": "#77be21",
-                "--rdp-day-width": "2.5rem",
-                "--rdp-day-height": "2.5rem",
-              } as CSSProperties
-            }
-            // NOTE: v9 renamed all classNames keys; the previous v8 keys
-            // (head_row/cell/day/…) silently did nothing, which is why the
-            // weekday header was broken. Only light v9 overrides needed now.
+            // Fully self-contained v9 styling via classNames (no external
+            // stylesheet — that import path doesn't resolve in this version).
+            // v9 renamed every key vs v8, which is why the old config did
+            // nothing and the weekday header was broken.
             classNames={{
+              months: "flex flex-col",
+              month: "relative space-y-2",
+              month_caption: "flex h-9 items-center justify-center",
+              caption_label: "text-base font-semibold text-[#04252b]",
+              nav: "absolute right-1 top-0 flex items-center gap-1",
+              button_previous:
+                "inline-flex h-8 w-8 items-center justify-center rounded-md text-[#04252b]/60 hover:bg-[#04252b]/5 hover:text-[#04252b]",
+              button_next:
+                "inline-flex h-8 w-8 items-center justify-center rounded-md text-[#04252b]/60 hover:bg-[#04252b]/5 hover:text-[#04252b]",
+              chevron: "h-4 w-4 fill-current",
+              month_grid: "w-full border-collapse",
+              weekdays: "flex",
+              weekday: "w-10 text-center text-[0.75rem] font-normal text-[#04252b]/50",
+              week: "mt-1 flex w-full",
+              day: "h-10 w-10 p-0 text-center text-sm",
+              day_button:
+                "inline-flex h-10 w-10 items-center justify-center rounded-full font-normal transition-colors hover:bg-[#77be21]/10 aria-selected:bg-[#77be21] aria-selected:text-white aria-selected:hover:bg-[#6ba01d]",
               today: "font-bold text-[#77be21]",
-              chevron: "fill-[#04252b]/70",
+              outside: "text-[#04252b]/20",
+              disabled: "cursor-not-allowed text-[#04252b]/20 hover:bg-transparent",
+              hidden: "invisible",
             }}
           />
         </div>
