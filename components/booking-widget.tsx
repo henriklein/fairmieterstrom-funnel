@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { format, addDays, isWeekend, startOfDay, isBefore, isAfter } from "date-fns"
+import { format, addDays, isWeekend, startOfDay } from "date-fns"
 import { de } from "date-fns/locale"
 import { DayPicker } from "react-day-picker"
 import { Calendar, CheckCircle2, ChevronLeft, Clock, Loader2 } from "lucide-react"
@@ -221,17 +221,6 @@ export function BookingWidget({
             selected={selectedDate}
             onSelect={handleDateSelect}
             disabled={disabledDays}
-            modifiers={{
-              // Days with no availability (host not bookable, e.g. weekends)
-              // within the bookable window — shown in red.
-              unavailable: (date: Date) =>
-                isWeekend(date) &&
-                !isBefore(date, addDays(today, 1)) &&
-                !isAfter(date, maxDate),
-            }}
-            modifiersClassNames={{
-              unavailable: "!text-red-400",
-            }}
             locale={de}
             showOutsideDays={false}
             className="!font-sans"
