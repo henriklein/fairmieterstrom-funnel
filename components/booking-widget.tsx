@@ -85,6 +85,11 @@ export function BookingWidget({
   const [phone, setPhone] = useState(prefill?.phone ?? "")
   const [formErrors, setFormErrors] = useState<Record<string, string>>({})
 
+  // Month availability (which days have >= 1 free slot) → grey out fully-booked
+  // / Urlaub / non-working days in the picker so they can't be selected.
+  const [monthAvail, setMonthAvail] = useState<Record<string, boolean>>({})
+  const [visibleMonth, setVisibleMonth] = useState<Date>(new Date())
+
   // Fetch meeting type on mount
   useEffect(() => {
     fetch(`${PEG_API}/api/booking/meeting-type/${slug}`)
@@ -95,6 +100,27 @@ export function BookingWidget({
       })
       .catch((err) => setError("Termintyp konnte nicht geladen werden"))
   }, [slug])
+
+  // Fetch per-day availability for the visible month (to grey out empty days).
+  useEffect(() => {
+    if (!meetingType) return
+    const monthStr = format(visibleMonth, "yyyy-MM")
+    let cancelled = false
+    fetch(`${PEG_API}/api/booking/availability?type=${meetingType.id}&month=${monthStr}`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (!cancelled && data && data.days) {
+          setMonthAvail((prev) => ({ ...prev, ...data.days }))
+        }
+      })
+      .catch(() => {
+        // Non-fatal — without month availability the picker still works; days
+        // just won't be pre-greyed (clicking shows the empty-day state).
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [meetingType, visibleMonth])
 
   // Fetch slots when date changes
   const fetchSlots = useCallback(
@@ -180,6 +206,13 @@ export function BookingWidget({
     { before: addDays(today, 1) },
     { after: maxDate },
     (date: Date) => isWeekend(date),
+    // Grey out days the month-availability endpoint reports as fully booked, on
+    // Urlaub, or otherwise without a free slot — but only once loaded for that
+    // day (unknown days stay enabled and fall back to the rules above).
+    (date: Date) => {
+      const key = format(date, "yyyy-MM-dd")
+      return key in monthAvail && monthAvail[key] === false
+    },
   ]
 
   if (error && !meetingType) {
@@ -221,6 +254,8 @@ export function BookingWidget({
             selected={selectedDate}
             onSelect={handleDateSelect}
             disabled={disabledDays}
+            month={visibleMonth}
+            onMonthChange={setVisibleMonth}
             locale={de}
             showOutsideDays={false}
             className="!font-sans"
