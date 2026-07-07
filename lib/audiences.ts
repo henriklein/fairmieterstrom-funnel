@@ -62,6 +62,13 @@ export interface Audience {
   /** Bento value props. */
   valueTitle: string
   valueProps: Item[]
+  /** Before/after comparison ("Trust & Authority" proof element). */
+  comparison: {
+    title: string
+    beforeLabel: string
+    afterLabel: string
+    rows: { label: string; before: string; after: string }[]
+  }
   projectsTitle: string
   projectsIntro: string
   projects: Project[]
@@ -183,6 +190,17 @@ export const AUDIENCES: Record<string, Audience> = {
         body: "Verlässliche Preise statt Preiskampf. Ist mit einem Partner ein Projekt vereinbart, entfällt jeder Wettbewerb.",
       },
     ],
+    comparison: {
+      title: "Einfamilienhaus-Preiskampf vs. Mehrfamilienhaus mit uns",
+      beforeLabel: "Einfamilienhaus heute",
+      afterLabel: "MFH mit Pure Energy Germany",
+      rows: [
+        { label: "Auftragswert", before: "10.000–20.000 €", after: "ab 20.000 € aufwärts" },
+        { label: "Vertrieb", before: "Leads kaufen, kalt anrufen, selbst hinfahren", after: "Wir liefern den fertigen Auftrag" },
+        { label: "Akquise-Aufwand", before: "unbezahlt bei euch", after: "0 € — tragen wir" },
+        { label: "Aufträge", before: "viele Anfragen, dünne Marge", after: "planbar & wiederkehrend" },
+      ],
+    },
     projectsTitle: "Drei Projekte, wie sie bei euch laufen könnten",
     projectsIntro:
       "So sieht ein typisches Mehrfamilienhaus-Projekt in Zahlen aus — inklusive einer echten, durchgerechneten Referenz.",
@@ -342,6 +360,17 @@ export const AUDIENCES: Record<string, Audience> = {
         body: "Ein Rahmen, viele Objekte. Was einmal steht, lässt sich auf das ganze Portfolio ausrollen.",
       },
     ],
+    comparison: {
+      title: "Klassischer Mieterstrom vs. fairMieterstrom",
+      beforeLabel: "Klassisch",
+      afterLabel: "fairMieterstrom",
+      rows: [
+        { label: "Genehmigung", before: "6–10 Monate", after: "~4 Wochen" },
+        { label: "Laufende Kosten", before: "60–75 € je Partei/Jahr", after: "0 € für Sie" },
+        { label: "Abrechnungsaufwand", before: "laufend, personalintensiv", after: "~15 Min pro Jahr & Objekt" },
+        { label: "Einstufung", before: "Energieversorger-Risiko", after: "keine Einstufung nötig" },
+      ],
+    },
     projectsTitle: "Drei Objekte, drei Wege",
     projectsIntro:
       "Von der einzelnen WEG bis zum gebündelten Portfolio — mit einer echten, durchgerechneten Referenz.",
@@ -501,6 +530,17 @@ export const AUDIENCES: Record<string, Audience> = {
         body: "Wir sind auf Ihrer Seite: Wir suchen das beste Angebot und verhandeln für Sie — nicht für einen Hersteller.",
       },
     ],
+    comparison: {
+      title: "Klassischer Mieterstrom vs. fairMieterstrom",
+      beforeLabel: "Klassisch",
+      afterLabel: "fairMieterstrom",
+      rows: [
+        { label: "Genehmigung", before: "6–10 Monate", after: "~4 Wochen" },
+        { label: "Rendite-Wirkung", before: "geschmälert", after: "bis 18,5 % p. a." },
+        { label: "Laufende Kosten", before: "60–75 € je Partei/Jahr", after: "0 € für Sie" },
+        { label: "Ihre Rolle", before: "Sie werden Energieversorger", after: "nur das Dach — den Rest machen wir" },
+      ],
+    },
     projectsTitle: "Drei Projekte, transparent durchgerechnet",
     projectsIntro:
       "Damit Sie sehen, was möglich ist — mit einer echten Referenz und modellierten Vergleichsfällen.",
