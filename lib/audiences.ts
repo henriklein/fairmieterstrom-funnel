@@ -100,8 +100,8 @@ export interface Audience {
 export const TESTIMONIAL = {
   quote:
     "Sehr professionelle Firma mit klarem Dienstleistungsgedanken. Die Zusammenarbeit läuft partnerschaftlich, verlässlich und auf Augenhöhe — genau so muss das sein.",
-  name: "Alexej Tschernow",
-  role: "Projektpartner · Elektroinstallationsbetrieb",
+  name: "Hausverwaltung Elfenthal",
+  role: "Kunde von Pure Energy Germany",
   youtubeId: "UdEDoUNaoaw",
 }
 
