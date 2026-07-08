@@ -111,6 +111,16 @@ function CtaCard({ audience, variant }: { audience: Audience; variant: CtaVarian
           pdfBullets={audience.pdf.bullets}
         />
       )}
+      <p className="mt-4 text-center text-xs text-[#04252b]/50">
+        Lieber telefonisch?{" "}
+        <a
+          href={`tel:${CONTACT.phone.replace(/\s/g, "")}`}
+          className="inline-flex items-center gap-1 font-medium text-[#04252b]/75 hover:text-[#5a8a1a] transition-colors rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#77be21]"
+        >
+          <Phone className="h-3 w-3 text-[#77be21]" />
+          {CONTACT.phone}
+        </a>
+      </p>
     </div>
   )
 }
@@ -119,11 +129,11 @@ function CtaCard({ audience, variant }: { audience: Audience; variant: CtaVarian
 function Eyebrow({ children, onDark = false }: { children: ReactNode; onDark?: boolean }) {
   return (
     <span
-      className={`${MONO} inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] ${
+      className={`${MONO} flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-balance ${
         onDark ? "text-[#a5e06a]" : "text-[#5a8a1a]"
       }`}
     >
-      <span className="h-1.5 w-1.5 rounded-full bg-[#77be21]" />
+      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#77be21]" />
       {children}
     </span>
   )
@@ -245,10 +255,12 @@ export function AudienceLanding({ audience }: { audience: Audience }) {
               </Reveal>
 
               <Reveal delay={180}>
-                <dl className="mt-9 grid grid-cols-3 gap-4 max-w-lg">
+                <dl className="mt-9 grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-5 max-w-lg">
                   {audience.heroStats.map((s) => (
-                    <div key={s.label} className="border-l-2 border-[#77be21]/40 pl-3">
-                      <dt className={`${DISPLAY} text-2xl sm:text-3xl text-[#77be21] tabular-nums leading-none`}>
+                    <div key={s.label} className="border-l-2 border-[#77be21]/40 pl-3 min-w-0">
+                      <dt
+                        className={`${DISPLAY} text-xl sm:text-2xl lg:text-3xl text-[#77be21] tabular-nums leading-none whitespace-nowrap`}
+                      >
                         {s.value}
                       </dt>
                       <dd className={`${MONO} mt-2 text-[10px] uppercase tracking-wider text-[#f3eee7]/55 leading-snug`}>
@@ -274,13 +286,13 @@ export function AudienceLanding({ audience }: { audience: Audience }) {
       <div className="bg-[#04252b] border-t border-white/10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-5 grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-4">
           {[
-            { v: "20 Jahre", l: "Generalunternehmer" },
-            { v: "3 Modelle", l: "Mieterstrom · GGV · gebäudeintern" },
-            { v: "~4 Wochen", l: "bis zur Genehmigung" },
+            { v: "20 Jahre", l: "familiengeführt · Generalunternehmer" },
+            { v: "3 Modelle", l: "Mieterstrom · GGV · Gebäudeinterner Strommarkt" },
+            { v: "8–10 Wochen", l: "bis zur techn. Inbetriebnahme" },
             { v: "Oskomera", l: "GmbH — solide Basis" },
           ].map((it) => (
             <div key={it.l} className="text-center sm:text-left">
-              <div className={`${DISPLAY} text-lg text-[#77be21]`}>{it.v}</div>
+              <div className={`${DISPLAY} text-lg text-[#77be21] whitespace-nowrap`}>{it.v}</div>
               <div className={`${MONO} text-[10px] uppercase tracking-wider text-[#f3eee7]/45 mt-1`}>
                 {it.l}
               </div>
@@ -451,8 +463,12 @@ export function AudienceLanding({ audience }: { audience: Audience }) {
                     <span className={`${MONO} inline-flex rounded-full bg-[#77be21]/15 text-[#a5e06a] px-3 py-1 text-[10px] uppercase tracking-wider`}>
                       {p.tag}
                     </span>
-                    <span className={`${MONO} text-[10px] uppercase tracking-wider ${p.real ? "text-[#f3eee7]/45" : "text-[#f3eee7]/30"}`}>
-                      {p.real ? "Echte Referenz" : "Modellrechnung"}
+                    <span
+                      className={`${MONO} text-[10px] uppercase tracking-wider ${
+                        p.real ? "text-[#a5e06a]" : "text-[#f3eee7]/45"
+                      }`}
+                    >
+                      {p.statusLabel}
                     </span>
                   </div>
                   <h3 className={`${DISPLAY} mt-4 text-xl`}>{p.title}</h3>
@@ -483,10 +499,8 @@ export function AudienceLanding({ audience }: { audience: Audience }) {
             ))}
           </div>
           <p className="mt-6 text-xs text-[#04252b]/45 max-w-3xl">
-            Rechenannahmen (Modell): 2.500 kWh je Haushalt + 1.000 kWh Allgemeinstrom ·
-            Mieterstrompreis 0,25 €/kWh (Referenz Grundversorgung 0,28 €/kWh) · Energiewerte aus
-            Anlagensimulation, Darstellung schematisch. Konkrete Zahlen rechnen wir für Ihr Objekt
-            im Erstgespräch durch.
+            Echte umgesetzte Projekte. Konkrete Zahlen hängen vom jeweiligen Gebäude ab und rechnen
+            wir im Erstgespräch durch.
           </p>
         </div>
       </section>

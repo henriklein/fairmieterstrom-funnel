@@ -32,8 +32,10 @@ export interface Project {
   body: string
   /** Optional highlighted result line, e.g. a return or an order value. */
   result?: string
-  /** True for the one real, non-modelled reference. */
+  /** All projects are real; this flag is used only for styling (e.g. highlighting the flagship reference). */
   real?: boolean
+  /** Honest, per-project status, e.g. "Umgesetzt" or "Umsetzung steht bevor". */
+  statusLabel: string
 }
 
 export interface Faq {
@@ -129,7 +131,7 @@ export const AUDIENCES: Record<string, Audience> = {
     subline:
       "Ihr macht euer Handwerk — wir bringen den fertigen Auftrag, übernehmen Vertrieb, Anträge und die komplette Mieterstrom-Abwicklung. Ihr steht nie allein.",
     heroStats: [
-      { value: "20 Jahre", label: "Generalunternehmer-Erfahrung" },
+      { value: "20 Jahre", label: "familiengeführter Generalunternehmer" },
       { value: "ab 20.000 €", label: "Auftragswert im MFH" },
       { value: "0 €", label: "Akquise-Aufwand für euch" },
     ],
@@ -145,7 +147,7 @@ export const AUDIENCES: Record<string, Audience> = {
       },
       {
         title: "Lange, zähe Wege",
-        body: "Von der Anfrage bis zur Umsetzung 3 bis 6 Monate. Komplexe MFH-Anfragen werden deshalb heute schlicht abgelehnt — und damit echter Umsatz.",
+        body: "Von der Anfrage bis zur Umsetzung 6–16 Monate. Komplexe MFH-Anfragen werden deshalb heute schlicht abgelehnt — und damit echter Umsatz.",
       },
     ],
     turningPoint:
@@ -203,13 +205,14 @@ export const AUDIENCES: Record<string, Audience> = {
     },
     projectsTitle: "Drei Projekte, wie sie bei euch laufen könnten",
     projectsIntro:
-      "So sieht ein typisches Mehrfamilienhaus-Projekt in Zahlen aus — inklusive einer echten, durchgerechneten Referenz.",
+      "Drei echte Mehrfamilienhaus-Projekte — vom abgeschlossenen Referenzprojekt bis zum Vorhaben kurz vor der Umsetzung.",
     projects: [
       {
         tag: "Referenz · GGV",
         title: "6-Parteien-Haus mit Wallbox",
         location: "Gemeinschaftliche Gebäudeversorgung",
         real: true,
+        statusLabel: "Umgesetzt",
         stats: [
           { value: "24,84 kWp", label: "PV-Leistung" },
           { value: "30,72 kWh", label: "Speicher" },
@@ -219,27 +222,29 @@ export const AUDIENCES: Record<string, Audience> = {
         result: "Auftragswert im oberen fünfstelligen Bereich · mehr Gewerke, hochwertigere Technik",
       },
       {
-        tag: "Modell · Mieterstrom",
+        tag: "Mieterstrom",
         title: "12-Parteien-Wohnanlage",
         location: "Reiner Gebäudeverbrauch",
+        statusLabel: "Umsetzung steht bevor",
         stats: [
           { value: "42 kWp", label: "PV-Leistung" },
           { value: "40 kWh", label: "Speicher" },
-          { value: "3–6 Mon.", label: "bis Umsetzung" },
+          { value: "8–10 Wochen", label: "bis techn. Inbetriebnahme" },
         ],
         body: "Größere Anlage, mehrere Zähler, Summenzähler-Messkonzept. Genau die Anfrage, die ihr heute abgeben müsstet — mit uns wird sie zum planbaren Auftrag.",
         result: "Folgeaufträge durch Nachrüstungen bei Bestandskunden",
       },
       {
-        tag: "Modell · Portfolio",
+        tag: "Portfolio",
         title: "Verwalter-Portfolio, 3 Objekte",
         location: "Gebäudeinterner Strommarkt",
+        statusLabel: "Umsetzung steht bevor",
         stats: [
           { value: "3 Objekte", label: "gebündelt" },
           { value: "28 WE", label: "gesamt" },
           { value: "wiederkehrend", label: "Umsatz" },
         ],
-        body: "Ein Verwalter, mehrere Gebäude — gebündelt geplant und umgesetzt. Ein blinder Fleck der Energiewende öffnet sich, und ihr seid von Anfang an dabei.",
+        body: "Ein Verwalter, mehrere Gebäude — gebündelt geplant, die Umsetzung steht bevor. Ein blinder Fleck der Energiewende öffnet sich, und ihr seid von Anfang an dabei.",
         result: "Planbare Pipeline statt Einzelanfragen",
       },
     ],
@@ -283,7 +288,7 @@ export const AUDIENCES: Record<string, Audience> = {
     meta: {
       title: "Partner werden · MFH-Aufträge für PV- & Elektrobetriebe | fairMieterstrom",
       description:
-        "Mehrfamilienhaus-Aufträge annehmen statt ablehnen: Wir übernehmen Vertrieb, Anträge und Mieterstrom-Abwicklung. Ihr macht euer Handwerk. 20 Jahre Erfahrung.",
+        "Mehrfamilienhaus-Aufträge annehmen statt ablehnen: Wir übernehmen Vertrieb, Anträge und Mieterstrom-Abwicklung. Ihr macht euer Handwerk. Familiengeführter Generalunternehmer, 20 Jahre Erfahrung.",
     },
   },
 
@@ -299,11 +304,11 @@ export const AUDIENCES: Record<string, Audience> = {
     subline:
       "Wir bringen Photovoltaik und Mieterstrom in Ihre Objekte und übernehmen Planung, Anträge, Mieterkommunikation und Abrechnung. Ihr Verwaltungsaufwand: nahezu null.",
     heroStats: [
-      { value: "~4 Wochen", label: "statt 6–10 Monate Genehmigung" },
+      { value: "8–10 Wochen", label: "bis zur techn. Inbetriebnahme" },
       { value: "15 Min/Jahr", label: "Abrechnungsaufwand je Objekt" },
       { value: "0 €", label: "laufende Kosten für Sie" },
     ],
-    painsTitle: "Was Solar im Bestand heute so zäh macht",
+    painsTitle: "Warum Mieterstrom für viele unrealisierbar wirkt",
     pains: [
       {
         title: "Bürokratie & Anträge",
@@ -314,7 +319,7 @@ export const AUDIENCES: Record<string, Audience> = {
         body: "Zähler, Modelle und Konzepte sind je Gebäude verschieden. Ein Fehler zieht sich über die ganze Laufzeit.",
       },
       {
-        title: "Laufende Pflichten",
+        title: "Laufende Verpflichtungen, hohe Kosten",
         body: "Ablesung, Abrechnung und Mieterkommunikation binden dauerhaft Personal, das Sie nicht haben.",
       },
     ],
@@ -326,7 +331,7 @@ export const AUDIENCES: Record<string, Audience> = {
     serviceSteps: [
       {
         title: "Aufnahme & Beratung",
-        body: "Wir hören uns Ihr Portfolio an, verstehen jedes Objekt und empfehlen das passende Modell — Mieterstrom, GGV oder gebäudeinterner Strommarkt.",
+        body: "Wir hören uns Ihr Portfolio an, verstehen jedes Objekt und empfehlen das passende Modell — Mieterstrom, GGV oder gebäudeinterner Strommarkt. Im Angebot enthalten: eine standardmäßige 30-minütige FAQ-Runde mit den Eigentümern.",
       },
       {
         title: "Modelle & Preise verhandelt",
@@ -334,7 +339,7 @@ export const AUDIENCES: Record<string, Audience> = {
       },
       {
         title: "Anträge & Umsetzung",
-        body: "Genehmigungen, Messkonzept und Installation über erfahrene Partnerbetriebe — koordiniert von uns.",
+        body: "Genehmigungen, Messkonzept und Installation über erfahrene Partnerbetriebe — koordiniert von uns, inklusive Unterstützung bei Verträgen.",
       },
       {
         title: "Abrechnung & Betreuung",
@@ -365,21 +370,22 @@ export const AUDIENCES: Record<string, Audience> = {
       beforeLabel: "Klassisch",
       afterLabel: "fairMieterstrom",
       rows: [
-        { label: "Genehmigung", before: "6–10 Monate", after: "~4 Wochen" },
-        { label: "Laufende Kosten", before: "60–75 € je Partei/Jahr", after: "0 € für Sie" },
+        { label: "Genehmigung", before: "6–16 Monate", after: "8–10 Wochen" },
+        { label: "Laufende Kosten", before: "120–180 € pro Jahr und Mieter", after: "0 € für Sie" },
         { label: "Abrechnungsaufwand", before: "laufend, personalintensiv", after: "~15 Min pro Jahr & Objekt" },
         { label: "Einstufung", before: "Energieversorger-Risiko", after: "keine Einstufung nötig" },
       ],
     },
     projectsTitle: "Drei Objekte, drei Wege",
     projectsIntro:
-      "Von der einzelnen WEG bis zum gebündelten Portfolio — mit einer echten, durchgerechneten Referenz.",
+      "Von der einzelnen WEG bis zum gebündelten Portfolio — drei echte Projekte, unterschiedlich weit in der Umsetzung.",
     projects: [
       {
         tag: "Referenz · GGV",
         title: "6-Parteien-Haus",
         location: "Gemeinschaftliche Gebäudeversorgung",
         real: true,
+        statusLabel: "Umgesetzt",
         stats: [
           { value: "24,84 kWp", label: "PV-Leistung" },
           { value: "71,8 %", label: "Autarkiegrad" },
@@ -389,38 +395,41 @@ export const AUDIENCES: Record<string, Audience> = {
         result: "Für die Verwaltung: 15 Minuten Aufwand pro Jahr",
       },
       {
-        tag: "Modell · Mieterstrom",
+        tag: "Mieterstrom",
         title: "WEG mit 12 Einheiten",
         location: "Eigentümergemeinschaft",
+        real: true,
+        statusLabel: "Umgesetzt",
         stats: [
           { value: "42 kWp", label: "PV-Leistung" },
           { value: "~30 %", label: "Ersparnis Mieter" },
           { value: "1 Konzept", label: "für alle Parteien" },
         ],
-        body: "Beschlussfähige Lösung für die Eigentümergemeinschaft: ein Modell, klare Abrechnung, keine laufende Belastung der Verwaltung.",
+        body: "Beschlussfähige Lösung für die Eigentümergemeinschaft, bereits umgesetzt bei Hausverwaltung Elfenthal: ein Modell, klare Abrechnung, keine laufende Belastung der Verwaltung.",
         result: "Wertsteigerung ohne Sonderumlage-Chaos",
       },
       {
-        tag: "Modell · Portfolio",
+        tag: "Portfolio",
         title: "Portfolio mit 3 Objekten",
         location: "Gebündelte Umsetzung",
+        statusLabel: "Umsetzung steht bevor",
         stats: [
           { value: "3 Objekte", label: "ein Rahmen" },
           { value: "28 WE", label: "gesamt" },
           { value: "1 Partner", label: "für alles" },
         ],
-        body: "Mehrere Gebäude gebündelt geplant und umgesetzt — mit einheitlicher Abrechnung und einem Ansprechpartner über das ganze Portfolio.",
+        body: "Mehrere Gebäude gebündelt geplant — die Umsetzung steht bevor, mit einheitlicher Abrechnung und einem Ansprechpartner über das ganze Portfolio.",
         result: "Planbar ausrollbar auf weitere Objekte",
       },
     ],
     faq: [
       {
         q: "Wie viel Arbeit bleibt bei uns?",
-        a: "Nahezu keine. Wir übernehmen Beratung, Anträge, Messkonzept, Installation über Partner, Mieterkommunikation und Abrechnung. Die jährliche Abrechnung je Objekt dauert rund 15 Minuten.",
+        a: "Nahezu keine. Wir übernehmen Beratung, Anträge, Messkonzept, Installation über Partner, Mieterkommunikation und Abrechnung. Die jährliche Abrechnung je Objekt dauert rund 15 Minuten. Ihre Abrechnung mit den Mietern wird kinderleicht.",
       },
       {
         q: "Werden wir dadurch zum Energieversorger?",
-        a: "Nein. Die Modelle sind so aufgesetzt, dass für Eigentümer und Verwaltung keine Einstufung als Energieversorger nötig ist — das ist Teil unserer Aufgabe.",
+        a: "Das hängt von Ihnen ab. Es gibt Standard-Modelle, aber auch die Möglichkeit, nicht als Energieversorger aufzutreten. Sie sagen uns, was Ihnen wichtig ist, und wir finden das perfekte Modell, passend zu Ihren Wünschen.",
       },
       {
         q: "Funktioniert das auch für eine WEG?",
@@ -428,7 +437,7 @@ export const AUDIENCES: Record<string, Audience> = {
       },
       {
         q: "Was kostet es die Verwaltung?",
-        a: "Für Sie fallen keine laufenden Kosten an — im Gegensatz zu klassischen Mieterstrommodellen mit 60–75 € pro Mietpartei und Jahr.",
+        a: "Für Sie fallen keine laufenden Kosten an — im Gegensatz zu klassischen Mieterstrommodellen mit 120–180 € pro Jahr und Mieter.",
       },
     ],
     pdf: {
@@ -471,7 +480,7 @@ export const AUDIENCES: Record<string, Audience> = {
     heroStats: [
       { value: "bis 18,5 %", label: "Rendite p. a. für Eigentümer" },
       { value: "bis 30 %", label: "Ersparnis für Ihre Mieter" },
-      { value: "~4 Wochen", label: "bis zur Genehmigung" },
+      { value: "8–10 Wochen", label: "bis zur techn. Inbetriebnahme" },
     ],
     painsTitle: "Warum das Dach heute meist ungenutzt bleibt",
     pains: [
@@ -481,7 +490,7 @@ export const AUDIENCES: Record<string, Audience> = {
       },
       {
         title: "Bürokratie & lange Wege",
-        body: "Von der Idee bis zur Anlage 3 bis 6 Monate: Förderung, Anmeldungen, Messkonzept, Netzbetreiber. Die meisten geben vorher auf.",
+        body: "Von der Idee bis zur Anlage 6–16 Monate: Förderung, Anmeldungen, Messkonzept, Netzbetreiber. Die meisten geben vorher auf.",
       },
       {
         title: "Angst vor laufendem Aufwand",
@@ -500,11 +509,11 @@ export const AUDIENCES: Record<string, Audience> = {
       },
       {
         title: "Beraten & Modelle finden",
-        body: "Wir suchen für Sie verschiedene Modelle und beraten, welches die beste Rendite bei geringstem Aufwand bringt.",
+        body: "Wir suchen für Sie verschiedene Modelle und beraten, welches die beste Rendite bei geringstem Aufwand bringt — inklusive einer standardmäßigen 30-minütigen FAQ-Runde mit den Eigentümern.",
       },
       {
         title: "Verhandeln & absichern",
-        body: "Wir besprechen mit Partnern, was möglich ist, und verhandeln für Sie die Preise — für stabile, faire Konditionen.",
+        body: "Wir besprechen mit Partnern, was möglich ist, verhandeln für Sie die Preise und unterstützen Sie bei Verträgen — für stabile, faire Konditionen.",
       },
       {
         title: "Umsetzen & abrechnen",
@@ -535,21 +544,22 @@ export const AUDIENCES: Record<string, Audience> = {
       beforeLabel: "Klassisch",
       afterLabel: "fairMieterstrom",
       rows: [
-        { label: "Genehmigung", before: "6–10 Monate", after: "~4 Wochen" },
-        { label: "Rendite-Wirkung", before: "geschmälert", after: "bis 18,5 % p. a." },
-        { label: "Laufende Kosten", before: "60–75 € je Partei/Jahr", after: "0 € für Sie" },
+        { label: "Genehmigung", before: "6–16 Monate", after: "8–10 Wochen" },
+        { label: "Rendite-Wirkung", before: "max. 12 % abzgl. laufender Kosten", after: "bis 18,5 % p. a." },
+        { label: "Laufende Kosten", before: "120–180 € pro Jahr und Mieter", after: "0 € für Sie" },
         { label: "Ihre Rolle", before: "Sie werden Energieversorger", after: "nur das Dach — den Rest machen wir" },
       ],
     },
     projectsTitle: "Drei Projekte, transparent durchgerechnet",
     projectsIntro:
-      "Damit Sie sehen, was möglich ist — mit einer echten Referenz und modellierten Vergleichsfällen.",
+      "Damit Sie sehen, was möglich ist — drei echte Projekte, transparent durchgerechnet.",
     projects: [
       {
         tag: "Referenz · mit Wallbox",
         title: "6-Parteien-Haus, E-Mobilität integriert",
         location: "Gemeinschaftliche Gebäudeversorgung",
         real: true,
+        statusLabel: "Umgesetzt",
         stats: [
           { value: "82,6 %", label: "Eigenverbrauch" },
           { value: "71,8 %", label: "Autarkiegrad" },
@@ -563,6 +573,7 @@ export const AUDIENCES: Record<string, Audience> = {
         title: "6-Parteien-Haus, reiner Gebäudeverbrauch",
         location: "Gemeinschaftliche Gebäudeversorgung",
         real: true,
+        statusLabel: "Umgesetzt",
         stats: [
           { value: "86,3 %", label: "Eigenverbrauch" },
           { value: "66,8 %", label: "Autarkiegrad" },
@@ -572,9 +583,10 @@ export const AUDIENCES: Record<string, Audience> = {
         result: "1.092 € Ertrag p. a. für den Eigentümer über die Dachpatenschaft",
       },
       {
-        tag: "Modell · größere Anlage",
+        tag: "größere Anlage",
         title: "12-Parteien-Wohnanlage",
         location: "Mieterstrom",
+        statusLabel: "Umsetzung steht bevor",
         stats: [
           { value: "42 kWp", label: "PV-Leistung" },
           { value: "bis 30 %", label: "Ersparnis Mieter" },
@@ -587,15 +599,15 @@ export const AUDIENCES: Record<string, Audience> = {
     faq: [
       {
         q: "Welches Modell ist das richtige für mein Gebäude?",
-        a: "Das finden wir für Sie heraus. Es gibt Mieterstrom, gemeinschaftliche Gebäudeversorgung und den gebäudeinternen Strommarkt — wir prüfen, welches bei Ihrem Objekt die beste Rendite bei geringstem Aufwand bringt.",
+        a: "Das finden wir für Sie heraus. Es gibt Mieterstrom, gemeinschaftliche Gebäudeversorgung und den gebäudeinternen Strommarkt — wir prüfen, welches bei Ihrem Objekt die beste Rendite bei geringstem Aufwand bringt und am besten zu Ihren Wünschen passt.",
       },
       {
         q: "Werde ich damit zum Energieversorger?",
-        a: "Nein. Die Modelle sind so gestaltet, dass für Sie keine Einstufung als Energieversorger nötig ist. Genau diese Komplexität nehmen wir Ihnen ab.",
+        a: "Das hängt von Ihnen ab. Es gibt Standard-Modelle, aber auch die Möglichkeit, nicht als Energieversorger aufzutreten. Sie sagen uns, was Ihnen wichtig ist, und wir finden das perfekte Modell, passend zu Ihren Wünschen.",
       },
       {
         q: "Wie hoch ist die Rendite realistisch?",
-        a: "Eigentümer erzielen je nach Modell und Gebäude Renditen bis zu 18,5 %, während Mieter bis zu 30 % gegenüber der Grundversorgung sparen. Ihre konkreten Zahlen rechnen wir im Erstgespräch durch.",
+        a: "Eigentümer erzielen je nach Modell und Gebäude Renditen bis zu 18,5 %, während Mieter bis zu 30 % gegenüber der Grundversorgung sparen. Ihr Potenzial rechnen wir im Erstgespräch durch.",
       },
       {
         q: "Wie viel Aufwand habe ich laufend?",
