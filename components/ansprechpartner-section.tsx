@@ -1,51 +1,19 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { BookingWidget } from "@/components/booking-widget";
-import { ExternalLink } from "lucide-react";
-import { useState, useEffect, useRef } from "react";
-import Script from "next/script";
 
+// 2026-08-25: Calendly fully removed (Jan's report — one flow still surfaced
+// Calendly). The section was already rendering the in-house BookingWidget;
+// this cleanup deletes the leftover dead code (unused popup handler + iframe
+// polling) and stops loading Calendly's third-party widget.js on the page.
+// All bookings run through www.fairmieterstrom.app/booking/*.
 export function AnsprechpartnerSection() {
-  const [calendlyLoaded, setCalendlyLoaded] = useState(false);
-  const widgetRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // Poll for the Calendly iframe to appear inside our widget div
-    const interval = setInterval(() => {
-      if (widgetRef.current?.querySelector("iframe")) {
-        setCalendlyLoaded(true);
-        clearInterval(interval);
-      }
-    }, 500);
-
-    // Stop polling after 15s
-    const timeout = setTimeout(() => clearInterval(interval), 15000);
-
-    return () => {
-      clearInterval(interval);
-      clearTimeout(timeout);
-    };
-  }, []);
-
-  const openCalendlyPopup = () => {
-    window.open(
-      "https://calendly.com/l-asamoah-pure-energy-germany/setter-call?hide_event_type_details=1&hide_gdpr_banner=1&background_color=ffffff&text_color=04252b&primary_color=77be21",
-      "_blank",
-      "width=800,height=700,scrollbars=yes,resizable=yes",
-    );
-  };
-
   return (
     <section
       id="kontakt"
       className="py-20 px-4 bg-gradient-to-br from-[#f3eee7] to-white"
     >
-      <Script
-        src="https://assets.calendly.com/assets/external/widget.js"
-        strategy="lazyOnload"
-      />
       <div className="max-w-6xl mx-auto">
         <h2 className="text-4xl font-bold text-center mb-16 text-balance text-[#04252b]">
           Ihr persönlicher Ansprechpartner
